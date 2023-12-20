@@ -1,16 +1,9 @@
-An initial NixOS system configuration. 
-This currently (mostly) works for my Lenovo Legion Y740.
+An initial NixOS system configuration for my Lenovo Legion Y740. 
 
-Some info about my system:
-```
-$ nix-info -m
- - system: `"x86_64-linux"`
- - host os: `Linux 6.6.6, NixOS, 24.05 (Uakari), 24.05.20231211.a9bf124`
- - multi-user?: `yes`
- - sandbox: `yes`
- - version: `nix-env (Nix) 2.18.1`
- - nixpkgs: `/nix/var/nix/profiles/per-user/root/channels/nixos`
-```
+Note this does not contain much user configuration as I use home-manager for that.
+(A separate repo.)
+
+I switch between Hyprland and KDE sessions.
 
 ```
 $ lspci | grep VGA
