@@ -21,6 +21,7 @@
     };
   };
 
+  # notice that some glyphs are just missing otherwise
   fonts = {
     enableDefaultPackages = true;   
   };

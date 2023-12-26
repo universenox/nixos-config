@@ -1,6 +1,6 @@
 # configuration.nix(5) man page
 # NixOS manual (accessible by running ‘nixos-help’).
-{ lib, config, pkgs, modulesPath, programs-sqlite-db, ... }:
+{ lib, config, pkgs, ... }:
 {
   imports = [
     ./LL740-boot-fs.nix
@@ -8,6 +8,7 @@
     ./locale.nix
     ./sound.nix
     ./display-manager.nix
+    ./steam.nix
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -17,6 +18,8 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     vim_configurable
+    helix 
+
     wget
     curl
     git

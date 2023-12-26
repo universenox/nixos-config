@@ -5,6 +5,9 @@ Note this does not contain much user configuration as I use home-manager for tha
 
 I switch between Hyprland and KDE sessions.
 
+However, it appears the my login to Hyprland is bugged; sometimes it logs into tty instead, at which point 
+I have to manually run `Hyprland`.
+
 ```
 $ lspci | grep VGA
 00:02.0 VGA compatible controller: Intel Corporation CoffeeLake-H GT2 [UHD Graphics 630]
