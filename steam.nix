@@ -15,7 +15,8 @@
   environment.systemPackages = with pkgs; [
     (steam.override {
        # withPrimus = true; # deprecated? gives error.
-       extraPkgs = pkgs: [ bumblebee glxinfo ];
+       # bumblebee errors now.
+       # extraPkgs = pkgs: [ bumblebee glxinfo ];
      }).run
      gamescope
   ];

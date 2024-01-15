@@ -4,7 +4,8 @@
   powerManagement.enable = true;
 
   boot.initrd.kernelModules = [ "nvidia" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module config.boot.kernelPackages.nvidia_x11 ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module ];
+  # config.boot.kernelPackages.nvidia_x11 ];
   boot.blacklistedKernelModules = [ "i2c_nvidia_gpu" ];
 
   hardware = {

@@ -19,7 +19,6 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; nixpkgs.config.allowUnfree = true; };
       lib = nixpkgs.lib;
-      home = import ./kim-home/home.nix;
     in
     {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
