@@ -1,4 +1,4 @@
-An initial NixOS system configuration for my Lenovo Legion Y740. 
+NixOS system configuration for my Lenovo Legion Y740. 
 
 Note this does not contain much user configuration as I use home-manager for that.
 (A separate repo.)

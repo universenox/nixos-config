@@ -20,10 +20,9 @@
     vim_configurable
     helix 
 
+    git
     wget
     curl
-    git
-    htop
     lshw
     home-manager
   ];

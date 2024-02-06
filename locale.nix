@@ -1,5 +1,6 @@
 { config, ... }:
 {
+  services.automatic-timezoned.enable = true; # deduce TZ
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {

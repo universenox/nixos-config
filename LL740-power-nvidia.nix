@@ -4,22 +4,31 @@
   powerManagement.enable = true;
 
   boot.initrd.kernelModules = [ "nvidia" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module ];
-  # config.boot.kernelPackages.nvidia_x11 ];
+  boot.extraModulePackages = [ 
+    config.boot.kernelPackages.lenovo-legion-module 
+    config.boot.kernelPackages.nvidia_x11 
+  ];
   boot.blacklistedKernelModules = [ "i2c_nvidia_gpu" ];
-
+  nixpkgs.config.packageOverrides = pkgs: {
+    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+  };
   hardware = {
     enableRedistributableFirmware = true;
     opengl = {
       enable = true;
       driSupport = true;
-      driSupport32Bit = true;
+      extraPackages = with pkgs; [ 
+      intel-media-driver 
+      intel-vaapi-driver 
+      intel-ocl
+      libvdpau-va-gl
+      ];
     };
 
     nvidia = {
       modesetting.enable = true; # required
       powerManagement.enable = true; # experimental
-      #powerManagement.finegrained = false; # experimental; offload
+      powerManagement.finegrained = true; # experimental; offload
 
       prime = {
         #sync.enable = true;

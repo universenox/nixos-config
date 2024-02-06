@@ -1,8 +1,6 @@
 { lib, config, pkgs, ... }:
 {
-  # NOTE: gamescope does not work with mouse at the moment.
-  # it may require disabling mouse acceleration.
- 
+  # https://nixos.wiki/wiki/Steam
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.nvidia.acceptLicense = true;
 
@@ -10,32 +8,11 @@
      enable = true;
      remotePlay.openFirewall = true;
      dedicatedServer.openFirewall = true;
+     gamescopeSession.enable = true;
+
+     package = pkgs.steam.override {
+       #withPrimus = true;
+       extraPkgs = pkgs: with pkgs; [ bumblebee glxinfo ];
+     };
    };
-
-  environment.systemPackages = with pkgs; [
-    (steam.override {
-       # withPrimus = true; # deprecated? gives error.
-       # bumblebee errors now.
-       # extraPkgs = pkgs: [ bumblebee glxinfo ];
-     }).run
-     gamescope
-  ];
-
-  # gamescope
-  nixpkgs.config.packageOverrides = pkgs: {
-    steam = pkgs.steam.override {
-      extraPkgs = pkgs: with pkgs; [
-        xorg.libXcursor
-        xorg.libXi
-        xorg.libXinerama
-        xorg.libXScrnSaver
-        libpng
-        libpulseaudio
-        libvorbis
-        stdenv.cc.cc.lib
-        libkrb5
-        keyutils
-      ];
-    };
-  };
 }
