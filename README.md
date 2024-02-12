@@ -1,4 +1,4 @@
-NixOS system configuration for my Lenovo Legion Y740. 
+NixOS system configuration for my Lenovo Legion Y740 and cheapo VPS. 
 
 Note this does not contain much user configuration as I use home-manager for that.
 (A separate repo.)

@@ -3,8 +3,8 @@
 { lib, config, pkgs, ... }:
 {
   imports = [
-    ./LL740-boot-fs.nix
-    ./LL740-power-nvidia.nix
+    ./boot-fs.nix
+    ./nvidia-power.nix
     ./locale.nix
     ./sound.nix
     ./display-manager.nix
@@ -18,7 +18,7 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     vim_configurable
-    helix 
+    helix
 
     git
     wget
@@ -27,7 +27,7 @@
     home-manager
   ];
 
-  environment.variables.EDITOR = "vim";
+  environment.variables.EDITOR = "hx";
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
@@ -39,7 +39,7 @@
   users.users.kim = {
     isNormalUser = true;
     description = "Kimberly Swanson";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "nginx" ];
     shell = pkgs.zsh;
   };
   services.printing.enable = true;

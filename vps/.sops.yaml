@@ -1,0 +1,9 @@
+keys:
+  - &kimserv_admin age1le05w5057vze07mwspj5dnclpddnyskyk0lxpqjawmvdwyg08g2quektcl
+  - &kimserv age1de4hr5x233jw47vsxvsaun0cun8lakmcphmm5aknctjs4j6f6qrs6g47z4
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+        - *kimserv_admin
+        - *kimserv
