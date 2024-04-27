@@ -24,8 +24,8 @@
 
     age
     gnupg
-    ssh-to-age
-    sops
+    # ssh-to-age
+    # sops
   ];
 
   programs.zsh.enable = true;
@@ -35,16 +35,16 @@
     shell = "${pkgs.zsh}/bin/zsh";
   };
 
-  sops = {
-    defaultSopsFile = ./sops.yaml;
-    age.sshKeyPaths = [ "/etc/ssh/mycute.cafe" ];
-    age.keyFile = "/etc/secrets/age/kimserv.txt";
-    age.generateKey = false;
+  # sops = {
+  #   defaultSopsFile = ./sops.yaml;
+  #   age.sshKeyPaths = [ "/etc/ssh/mycute.cafe" ];
+  #   age.keyFile = "/etc/secrets/age/kimserv.txt";
+  #   age.generateKey = false;
 
-    secrets."syncthing-gui-pw" = {
-      sopsFile = ./secrets/syncthing.yaml;
-      owner = config.users.users.syncthing.name;
-      group = config.users.groups.wheel.name;
-    };
-  };
+  #   secrets."syncthing-gui-pw" = {
+  #     sopsFile = ./secrets/syncthing.yaml;
+  #     owner = config.users.users.syncthing.name;
+  #     group = config.users.groups.wheel.name;
+  #   };
+  # };
 }

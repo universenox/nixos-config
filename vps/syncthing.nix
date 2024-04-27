@@ -6,16 +6,17 @@
     syncthing
   ];
 
-  networking.firewall.allowedTCPPorts = [
-    8384
-  ];
+  # networking.firewall.allowedTCPPorts = [
+  #   8384
+  # ];
   services.syncthing = {
     enable = true;
-    openDefaultPorts = true;
+    # Do not allow external access. Tailscale is used instead.
+    openDefaultPorts = false;
     guiAddress = "127.0.0.1:8384";
     # cert = "/mycute-cafe/cert.pem";
     # key = "/mycute-cafe/key.pem";
-    guiPasswordFile = "${config.sops.secrets."syncthing-gui-pw".path}";
+    # guiPasswordFile = "${config.sops.secrets."syncthing-gui-pw".path}";
 
     settings = {
       gui = {
