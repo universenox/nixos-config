@@ -10,8 +10,9 @@
     dedicatedServer.openFirewall = true;
     gamescopeSession.enable = true;
 
-    package = pkgs.steam.override {
-      extraPkgs = pkgs: with pkgs; [ bumblebee glxinfo ];
-    };
+    # TODO: bumblebee pulls in older (broken) nvidia driver.
+    # package = pkgs.steam.override {
+    #   extraPkgs = pkgs: with pkgs; [ bumblebee glxinfo ];
+    # };
   };
 }

@@ -6,10 +6,10 @@
   boot.extraModulePackages = [
     #config.boot.kernelPackages.lenovo-legion-module
   ];
-  boot.blacklistedKernelModules = [ "i2c_nvidia_gpu" ]; # error in journalctl otherwise
-  nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  };
+  #boot.blacklistedKernelModules = [ "i2c_nvidia_gpu" ]; # error in journalctl otherwise
+  # nixpkgs.config.packageOverrides = pkgs: {
+  #   vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+  # };
 
   hardware = {
     enableRedistributableFirmware = true;
@@ -34,8 +34,7 @@
       powerManagement.enable = true; # experimental
       # powerManagement.finegrained = true; # experimental; offload
 
-      # package = config.boot.kernelPackages.nvidiaPackages.stable;
-      package = config.boot.kernelPackages.nvidiaPackages.vulkan_beta;
+      package = config.boot.kernelPackages.nvidia_x11_vulkan_beta;
 
       prime = {
         # offload.enable = true;
@@ -46,7 +45,7 @@
       };
     };
   };
-  services.xserver.videoDrivers = [ "nvidia" ];
+  #services.xserver.videoDrivers = [ "nvidia" ];
   services.thermald.enable = true;
 
   # tlp conflicts with power profiles daemon

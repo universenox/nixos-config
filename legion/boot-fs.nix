@@ -13,7 +13,7 @@ let esp_mount = "/boot/efi"; in# repartition sometime?
     fsType = "vfat";
   };
 
-  boot = let kernpkgs = pkgs.linuxPackages_6_6; in {
+  boot = let kernpkgs = pkgs.linuxPackages_6_8; in {
     kernelPackages = kernpkgs;
     kernelModules = [ "kvm-intel" "v4l2loopback" ];
     extraModulePackages = with kernpkgs; [ v4l2loopback ];

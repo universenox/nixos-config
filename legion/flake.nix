@@ -3,12 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    #nixpkgs.url = "github:universenox/nixpkgs/syncthing_more";
 
     # for suggesting pkgs when not found
     flake-programs-sqlite.url = "github:wamserma/flake-programs-sqlite";
     flake-programs-sqlite.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }:
@@ -18,7 +18,7 @@
       lib = nixpkgs.lib;
     in
     {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.legion = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           (import ./configuration.nix)

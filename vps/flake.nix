@@ -12,13 +12,15 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; nixpkgs.config.allowUnfree = true; };
       lib = nixpkgs.lib;
+
+      syncthing_port = 5545;
     in
     {
-      nixosConfigurations.kimserv = nixpkgs.lib.nixosSystem
+      nixosConfigurations.vps = nixpkgs.lib.nixosSystem
         {
           inherit system;
           modules = [
-            (import ./configuration.nix)
+            ./configuration.nix
             # sops-nix.nixosModules.sops
           ];
         };

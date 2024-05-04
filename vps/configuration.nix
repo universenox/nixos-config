@@ -1,11 +1,15 @@
-{ config, pkgs, ... }:
+{ config, pkgs, syncthing_port, ... }:
 {
   imports = [
     ./hardware-configuration.nix
     ./ssh.nix
+    ../custom_cfg.nix
     ./networking.nix
-    ./syncthing.nix
   ];
+  custom_cfg.user = "kim";
+  custom_cfg.tailscale_user = "vps";
+  custom_cfg.enableTailscaleClient = true;
+  custom_cfg.enableSyncthingClient = true;
 
   system.stateVersion = "23.11";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -14,7 +18,6 @@
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "curses";
   };
 
   environment.systemPackages = with pkgs; [
@@ -22,10 +25,11 @@
     home-manager
     openssl
 
+    pass
+    syncthing
+
     age
     gnupg
-    # ssh-to-age
-    # sops
   ];
 
   programs.zsh.enable = true;
@@ -34,17 +38,4 @@
     extraGroups = [ "wheel" config.services.nginx.group config.services.syncthing.group ];
     shell = "${pkgs.zsh}/bin/zsh";
   };
-
-  # sops = {
-  #   defaultSopsFile = ./sops.yaml;
-  #   age.sshKeyPaths = [ "/etc/ssh/mycute.cafe" ];
-  #   age.keyFile = "/etc/secrets/age/kimserv.txt";
-  #   age.generateKey = false;
-
-  #   secrets."syncthing-gui-pw" = {
-  #     sopsFile = ./secrets/syncthing.yaml;
-  #     owner = config.users.users.syncthing.name;
-  #     group = config.users.groups.wheel.name;
-  #   };
-  # };
 }
