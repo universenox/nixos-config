@@ -6,9 +6,8 @@
   services.xserver = {
     enable = true;
     xkb.layout = "us";
-    desktopManager.plasma5.enable = true;
   };
-  services.displayManager.defaultSession = "plasmawayland";
+  services.desktopManager.plasma6.enable = true;
 
   # notice that some glyphs are just missing otherwise
   fonts = {
