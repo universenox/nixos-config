@@ -1,13 +1,10 @@
-NixOS system configuration for my Lenovo Legion Y740 and cheapo VPS. 
+## System Descriptions
+NixOS system configuration for my Lenovo Legion Y740, and Lenovo X1 Carbon Gen11.
 
 Note this does not contain much user configuration as I use home-manager for that.
 (A separate repo.)
 
-I switch between Hyprland and KDE sessions.
-
-However, it appears the my login to Hyprland is bugged; sometimes it logs into tty instead, at which point 
-I have to manually run `Hyprland`.
-
+Lenovo Legion:
 ```
 $ lspci | grep VGA
 00:02.0 VGA compatible controller: Intel Corporation CoffeeLake-H GT2 [UHD Graphics 630]

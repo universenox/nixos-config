@@ -9,10 +9,9 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     gamescopeSession.enable = true;
-
-    # TODO: bumblebee pulls in older (broken) nvidia driver.
-    # package = pkgs.steam.override {
-    #   extraPkgs = pkgs: with pkgs; [ bumblebee glxinfo ];
-    # };
+    # extraPackages = with pkgs;[
+    #   mangohud
+    #   gamescope
+    # ];
   };
 }

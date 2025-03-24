@@ -30,77 +30,69 @@ with lib;
       }
     ];
 
-    services.tailscale = lib.mkIf (cfg.enableTailscaleClient) {
-      enable = true;
-      openFirewall = true;
-      extraUpFlags = [ "--login-server" "${config.custom_cfg.headscale_login_server}" ];
-    };
+    # headscale is borken.
+    # idk if i even wanna bother....
+    # services.tailscale = lib.mkIf (cfg.enableTailscaleClient) {
+    #   enable = true;
+    #   openFirewall = true;
+    #   extraUpFlags = [ "--login-server" "${config.custom_cfg.headscale_login_server}" ];
+    # };
 
-    # note this is not very reproducible: 
-    # device IDs get reset if we start from scratch, and phone that's not on Nix
-    # is going to require manual config. but, shouldn't be required often....
     services.syncthing = lib.mkIf (cfg.enableSyncthingClient) {
       enable = cfg.enableSyncthingClient;
-      openDefaultPorts = false;
-      guiAddress = "0.0.0.0:${toString cfg.syncthing_gui_port}";
+      # would slightly prefer syncthing on vpn only, but w/e.
+      openDefaultPorts = true;
+      # guiAddress = "0.0.0.0:${toString cfg.syncthing_gui_port}";
+      guiAddress = "localhost:${toString cfg.syncthing_gui_port}";
 
-      # because it basically needs to touch everything in my ~ anyways.
       user = "${cfg.user}";
       dataDir = "/home/${cfg.user}";
 
-      # note overrideDevices, without key and cert, regens ids.
-      # I'm too lazy to set up sops right now.
-      # overrideDevices = true;
-      # overrideFolders = true;
-
       settings = {
-        listenAddresses = [ "tcp://${cfg.vpn_address}:${toString cfg.syncthing_transfer_port}" ];
-
-        gui = {
-          insecureAdminAccess = true; # false warning; we're on vpn.
-        };
         options = {
           globalAnnounceEnabled = false;
           localAnnounceEnabled = true;
           relaysEnabled = false;
         };
-        devices =
-          let
-            mkIp = name: "tcp://${name}.${name}.${cfg.vpn_domain}";
-          in
-          {
-            vps = {
-              id = "IPP3SII-HQODAZU-5FE6NIG-3PXZ5KC-N4QCPOL-BO2PRCX-6YLJI33-5OU4JQK";
-              addresses = [ (mkIp "vps") ];
-            };
-            legion = {
-              id = "RVLK6S2-XOB5XRM-4Y2N6F7-F7WT7BP-N2FBRIX-4EDXWXB-FSFLS2W-OBC55QV";
-              addresses = [ (mkIp "legion") ];
-            };
-            nord = {
-              id = "OSH3ZHU-LWQKY7N-7ZDC7LP-K3QJMIK-M4GB56R-BLJYTXT-P6PQNK2-OUEBZQN";
-              addresses = [ (mkIp "nord") ];
-            };
-          };
-        folders = let all_devices = [ "vps" "nord" "legion" ]; in {
+        # don't specify the IP addresses. rely on global/local discovery.
+        # note this relies on some local state; would require manual reconfig for device ids etc
+        # if you cleared its home dir
+        devices = {
+          vps.id = "IPP3SII-HQODAZU-5FE6NIG-3PXZ5KC-N4QCPOL-BO2PRCX-6YLJI33-5OU4JQK";
+          legion.id = "RVLK6S2-XOB5XRM-4Y2N6F7-F7WT7BP-N2FBRIX-4EDXWXB-FSFLS2W-OBC55QV";
+          pixel.id = "R2H6G4T-IIBAH4A-W6J7IPO-DPRQLRC-RBC46CP-CP6DMBV-6L2JCW5-5JYXHA2";
+          carbonara.id = "RIXWUCR-O42UR2U-AQD632P-YBUNCSC-KPORSUG-NHVZNWR-BABZM4Q-C7QHPQ5";
+        };
+        # note this is the view of things from the local device.
+        folders = let all_devices = [ "pixel" "legion" "carbonara" ]; 
+        in {
           # this works for me, but can set device-specific path too if you want.
-          nixos = { path = "/etc/nixos/"; devices = all_devices; };
-          home-manager = { path = "~/.config/home-manager/"; devices = all_devices; };
           Documents = { path = "~/Documents/"; devices = all_devices; };
           Music = { path = "~/Music/"; devices = all_devices; };
           Pictures = { path = "~/Pictures/"; devices = all_devices; };
+
+          # TODO: be better about using git...
+          MyCode = { path = "~/MyCode"; devices = all_devices; };
+
+          nixos = { path = "/etc/nixos/"; devices = all_devices; };
+          home-manager = { path = "~/.config/home-manager/"; devices = all_devices; };
+          passwords = { path = "~/.password-store"; devices = all_devices; };
+          gnupg = { path = "~/.gnupg"; devices = all_devices; };
+          ssh = { path = "~/.ssh"; devices = all_devices; };
         };
       };
     };
 
-    networking.firewall.interfaces.tailscale0.allowedTCPPorts =
-      let
-        openssh = config.services.openssh;
-        syncthing = config.services.syncthing;
-        cfg = config.custom_cfg;
-        optionals = lib.lists.optionals;
-      in
-      optionals openssh.enable openssh.ports ++
-      optionals syncthing.enable [ cfg.syncthing_gui_port cfg.syncthing_transfer_port ];
+  # no longer using.
+  #   networking.firewall.interfaces.tailscale0.allowedTCPPorts =
+  #     let
+  #       openssh = config.services.openssh;
+  #       syncthing = config.services.syncthing;
+  #       cfg = config.custom_cfg;
+  #       optionals = lib.lists.optionals;
+  #     in
+  #     optionals openssh.enable openssh.ports ++
+  #     optionals syncthing.enable [ cfg.syncthing_gui_port cfg.syncthing_transfer_port ];
+  # };
   };
 }

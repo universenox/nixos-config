@@ -1,6 +1,6 @@
 # configuration.nix(5) man page
 # NixOS manual (accessible by running ‘nixos-help’).
-{ lib, config, pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ./boot-fs.nix
@@ -11,6 +11,16 @@
     ./steam.nix
     ../custom_cfg.nix
   ];
+
+  nix.settings.trusted-users = [
+    "kim"
+  ];
+
+  # for playing around with pinned threads, benchmarks.
+  boot.kernelParams = [
+    # "isolcpus=0,1"
+  ];
+  
   custom_cfg.user = "kim";
   custom_cfg.enableTailscaleClient = true;
   custom_cfg.enableSyncthingClient = true;
@@ -19,7 +29,7 @@
   system.stateVersion = "23.05"; # no touchy
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  nixpkgs.config.allowUnfree = true;
+  # nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     vim_configurable
     helix
@@ -29,11 +39,17 @@
     curl
     lshw
     home-manager
-
+    glxinfo
+    wl-clipboard
   ];
 
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings.General.Experimental = true;
+  };
+  
+  hardware.keyboard.zsa.enable = true;
 
   environment.variables.EDITOR = "hx";
   networking = {
@@ -47,17 +63,8 @@
   users.users.kim = {
     isNormalUser = true;
     description = "Kimberly Swanson";
-    extraGroups = [ "networkmanager" "wheel" "nginx" ];
+    extraGroups = [ "networkmanager" "wheel" "nginx" "plugdev" "gamemode" ];
     shell = pkgs.zsh;
   };
   services.printing.enable = true;
-  services.tailscale = {
-    enable = true;
-    openFirewall = true;
-    extraUpFlags = [
-      "--login-server"
-      "https://headscale.mycute.cafe:443"
-      "--accept-routes"
-    ];
-  };
 }
