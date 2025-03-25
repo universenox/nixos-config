@@ -1,0 +1,28 @@
+{
+    options.my.tailscale = { 
+        domain = mkOption { type = with types; str; default = "mycute.cafe"; };
+        vpn_domain = mkOption { type = with types; str; default = "vpn.net"; }; # note tailscale DNS means this is internal only.
+        headscale_login_server = mkOption { type = with types; str; default = "https://headscale.${cfg.domain}"; };
+        vpn_address = mkOption { type = with types; str; default = "${hostname}.${cfg.tailscale_user}.${cfg.vpn_domain}"; };
+    };
+
+    config = {
+        services.tailscale = lib.mkIf (cfg.enableTailscaleClient) {
+          enable = true;
+          openFirewall = true;
+          extraUpFlags = [ "--login-server" "${config.custom_cfg.headscale_login_server}" ];
+        };
+
+        
+    networking.firewall.interfaces.tailscale0.allowedTCPPorts =
+      let
+        openssh = config.services.openssh;
+        syncthing = config.services.syncthing;
+        cfg = config.custom_cfg;
+        optionals = lib.lists.optionals;
+      in
+      optionals openssh.enable openssh.ports ++
+      optionals syncthing.enable [ cfg.syncthing_gui_port cfg.syncthing_transfer_port ];
+  };
+    };
+}

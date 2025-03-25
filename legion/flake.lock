@@ -6,11 +6,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1742664323,
-        "narHash": "sha256-3bFgz+kesKup1CNsNZlL1wR+FONLkiktzZgeEewIQM4=",
+        "lastModified": 1742805932,
+        "narHash": "sha256-WkhBaK/sY7mEcxjI3BuMhIJAimTSHWPdonKqrS5mX8s=",
         "owner": "wamserma",
         "repo": "flake-programs-sqlite",
-        "rev": "a55e58db918a6c29b7606fb5c89c515471f64011",
+        "rev": "e957e7d251f0cda91b22ad2e0e63832c08bc1284",
         "type": "github"
       },
       "original": {
@@ -21,14 +21,14 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1742669202,
-        "narHash": "sha256-nK+9SegKzx6nhjkOMUDOMqsPpevQcEIPj1uRjif6HNU=",
+        "lastModified": 1742825959,
+        "narHash": "sha256-wgnQZMrLLQJlZ+htTXzoQtoz9EzL15Z2crH3+OnRmMk=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "94ea2cb536fa083665e12d08515d97313e0900f1",
+        "rev": "908e055e157a0b35466faf4125d7e7410ff56160",
         "type": "github"
       },
       "original": {
@@ -52,11 +52,43 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1742422364,
+        "narHash": "sha256-mNqIplmEohk5jRkqYqG19GA8MbQ/D4gQSK0Mu4LvfRQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a84ebe20c6bc2ecbcfb000a50776219f48d134cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1742669843,
+        "narHash": "sha256-G5n+FOXLXcRx+3hCJ6Rt6ZQyF1zqQ0DL0sWAMn2Nk0w=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "1e5b653dff12029333a6546c11e108ede13052eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-programs-sqlite": "flake-programs-sqlite",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_3"
       }
     },
     "utils": {

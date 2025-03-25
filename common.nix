@@ -1,30 +1,23 @@
 # Everything here should be NOT specific to hardware.
 # System-level stuff that we want for personal machines.
-{ lib, config, pkgs, ... }:
+{ lib, pkgs, ... }:
 {
-  nix.settings.trusted-users = [
-    "kim"
-  ];
-
-  # for running benchmarks.
-  boot.kernelParams = [
-    "isolcpus=0,1"
-  ];
+  nixpkgs.config.allowUnfree = true;
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "kim" ];
+  };
 
   users.users.kim = {
     isNormalUser = true;
     description = "Kimberly Swanson";
-    extraGroups = [ "networkmanager" "wheel" "nginx" "plugdev" ];
+    extraGroups = [ "networkmanager" "wheel" "nginx" "plugdev" "gamemode" ];
     shell = pkgs.zsh;
   };
   
-  custom_cfg.user = "kim";
-  custom_cfg.enableTailscaleClient = true;
-  custom_cfg.enableSyncthingClient = true;
+  my.syncthing.user = "kim";
+  my.syncthing.enable = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     vim_configurable
     helix
@@ -37,6 +30,7 @@
     gnupg
     wl-clipboard
   ];
+  environment.variables.EDITOR = "hx";
 
   hardware.bluetooth = {
     enable = true;
@@ -54,8 +48,7 @@
   programs.zsh.enable = true;
 
   services.printing.enable = true;
-  services.automatic-timezoned.enable = true; # deduce TZ
-  # time.timeZone = "Europe/London";
+  services.automatic-timezoned.enable = true;
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_GB.UTF-8";
@@ -70,9 +63,7 @@
   };
 
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-  };
+  services.pipewire.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   security.polkit.enable = true;
